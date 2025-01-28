@@ -18,7 +18,7 @@ from utils import Color, Pattern
 import requests
 requests.packages.urllib3.disable_warnings()
 
-today = datetime.datetime.now().strftime("%Y-%m-%d")
+today = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
 
 
 def update_today(data: list=[]):
