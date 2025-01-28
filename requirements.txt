@@ -7,4 +7,8 @@ pyyaml
 python-telegram-bot
 PySocks
 pyrate-limiter==2.10.0
+openai
+trafilatura
+pyhton-dotenv
+colorlog
 git+https://github.com/kurtmckee/listparser

@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Bitcoin Wallets Holding 100 to 1,000 BTC Hit Record High",
+    "summary": "Data from Santiment has revealed that the number of Bitcoin wallets holding between 100 and 1,000 BTC has surged to an all-time high, reaching 15,777 wallets. This increase is viewed as a bullish sign for 2025, indicating rising confidence among mid-sized investors. Furthermore, large Bitcoin holders, also known as whales, have resumed accumulating BTC after a brief profit-taking period, which is reflected in a dramatic monthly growth rate shift of 2% for large holders. Analysts suggest these trends indicate that as retail traders engage in impulsive trading driven by fear of missing out (FOMO), larger holders are likely to capitalize, ultimately pushing prices higher. Optimism persists around potential pro-crypto policies incoming with Donald Trump, combined with deepening institutional adoption in the cryptocurrency space.",
+    "key_entities": [
+      {
+        "type": "project",
+        "name": "Santiment"
+      },
+      {
+        "type": "token",
+        "name": "Bitcoin"
+      },
+      {
+        "type": "person",
+        "name": "Donald Trump"
+      },
+      {
+        "type": "project",
+        "name": "Bitfinex"
+      }
+    ],
+    "sentiment": "bullish",
+    "category": "Markets",
+    "url": "https://thedefiant.io/news/markets/bitcoin-wallets-holding-100-to-1-000-btc-reach-record-high"
+  }
+]
