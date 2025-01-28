@@ -9,6 +9,6 @@ PySocks
 pyrate-limiter==2.10.0
 openai
 trafilatura
-pyhton-dotenv
+python-dotenv
 colorlog
 git+https://github.com/kurtmckee/listparser
