@@ -2,6 +2,8 @@ import json
 import os
 import httpx
 import logging
+import re
+from pathlib import Path
 from trafilatura import fetch_url, extract  # Clean HTML/text
 import openai  # Or llama.cpp/ollama for open-source models
 from dotenv import load_dotenv
@@ -32,6 +34,46 @@ openai.api_key = os.getenv("OPENAI_API_KEY", None)
 
 if not openai.api_key:
     raise ValueError("OPENAI_API_KEY is not set in the environment variables.")
+
+def get_latest_archive_file():
+    """Get the most recently created markdown file from archive directory"""
+    root_path = Path(__file__).absolute().parent
+    archive_path = root_path.joinpath('archive')
+    
+    latest_file = None
+    latest_time = 0
+    
+    # Walk through all year directories
+    for year_dir in archive_path.glob('*'):
+        if not year_dir.is_dir():
+            continue
+            
+        # Check all md files in year directory
+        for md_file in year_dir.glob('*.md'):
+            file_time = md_file.stat().st_mtime
+            if file_time > latest_time:
+                latest_time = file_time
+                latest_file = md_file
+                
+    return latest_file
+
+def extract_urls_from_md(md_file):
+    """Extract all URLs from markdown file"""
+    if not md_file:
+        logger.error("No markdown file provided")
+        return []
+        
+    with open(md_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+        
+    # Find all markdown links [title](url)
+    pattern = r'\[([^\]]+)\]\(([^)]+)\)'
+    matches = re.findall(pattern, content)
+    
+    # Extract just the URLs
+    urls = [url for _, url in matches]
+    logger.info(f"Found {len(urls)} URLs in {md_file.name}")
+    return urls
 
 def extract_with_llm(html: str, url: str) -> dict:
     """Use LLM to extract structured data from HTML."""
@@ -103,10 +145,19 @@ async def scrape_url(url: str):
 async def main():
     logger.info("Starting web scraping process")
     
-    # Fetch URLs
-    urls = [
-        "https://thedefiant.io/news/markets/bitcoin-wallets-holding-100-to-1-000-btc-reach-record-high",
-    ]
+    # Get latest archive file and extract URLs
+    latest_md = get_latest_archive_file()
+    if not latest_md:
+        logger.error("No archive files found")
+        return
+        
+    logger.info(f"Processing latest archive: {latest_md}")
+    urls = extract_urls_from_md(latest_md)
+    
+    if not urls:
+        logger.error("No URLs found in archive file")
+        return
+        
     logger.info(f"Processing {len(urls)} URLs")
 
     # Process URLs
