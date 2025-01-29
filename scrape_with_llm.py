@@ -8,6 +8,7 @@ from trafilatura import fetch_url, extract  # Clean HTML/text
 import openai  # Or llama.cpp/ollama for open-source models
 from dotenv import load_dotenv
 import colorlog
+from datetime import datetime
 
 # Configure logging with colors
 handler = colorlog.StreamHandler()
@@ -58,7 +59,7 @@ def get_latest_archive_file():
     return latest_file
 
 def extract_urls_from_md(md_file):
-    """Extract all URLs from markdown file"""
+    """Extract all URLs and their titles from markdown file"""
     if not md_file:
         logger.error("No markdown file provided")
         return []
@@ -70,10 +71,10 @@ def extract_urls_from_md(md_file):
     pattern = r'\[([^\]]+)\]\(([^)]+)\)'
     matches = re.findall(pattern, content)
     
-    # Extract just the URLs
-    urls = [url for _, url in matches]
-    logger.info(f"Found {len(urls)} URLs in {md_file.name}")
-    return urls
+    # Create list of tuples (url, title)
+    url_data = [(url, title) for title, url in matches]
+    logger.info(f"Found {len(url_data)} URLs in {md_file.name}")
+    return url_data
 
 def extract_with_llm(html: str, url: str) -> dict:
     """Use LLM to extract structured data from HTML."""
@@ -123,21 +124,33 @@ def extract_with_llm(html: str, url: str) -> dict:
         logger.error(f"Error processing with LLM: {str(e)}")
         return {"error": str(e)}
 
-async def scrape_url(url: str):
+async def scrape_url(url: str, title: str = None):
     """Fetch and process a single URL."""
-    logger.info(f"Starting to scrape URL: {url}")
+    logger.info(f"Starting to process URL: {url}")
     try:
-        # Fetch HTML
-        html = fetch_url(url)
-        if not html:
-            logger.error(f"Failed to fetch HTML from {url}")
-            return None
+        if "t.me/" in url:
+            # For Telegram links, use the title as content directly
+            if not title:
+                logger.error(f"No title provided for Telegram link: {url}")
+                return None
+            
+            logger.info(f"Processing Telegram message: {title}")
+            result = extract_with_llm(title, url)  # Pass title as content
+            result["url"] = url
+            logger.info(f"Successfully processed Telegram message")
+            return result
+        else:
+            # Regular web URLs - fetch and process HTML
+            html = fetch_url(url)
+            if not html:
+                logger.error(f"Failed to fetch HTML from {url}")
+                return None
 
-        # Extract with LLM
-        result = extract_with_llm(html, url)
-        result["url"] = url
-        logger.info(f"Successfully processed {url}")
-        return result
+            result = extract_with_llm(html, url)
+            result["url"] = url
+            logger.info(f"Successfully processed {url}")
+            return result
+            
     except Exception as e:
         logger.error(f"Error processing {url}: {str(e)}")
         return {"url": url, "error": str(e)}
@@ -145,31 +158,31 @@ async def scrape_url(url: str):
 async def main():
     logger.info("Starting web scraping process")
     
-    # Get latest archive file and extract URLs
+    # Get latest archive file and extract URLs with titles
     latest_md = get_latest_archive_file()
     if not latest_md:
         logger.error("No archive files found")
         return
         
     logger.info(f"Processing latest archive: {latest_md}")
-    urls = extract_urls_from_md(latest_md)
+    url_data = extract_urls_from_md(latest_md)
     
-    if not urls:
+    if not url_data:
         logger.error("No URLs found in archive file")
         return
         
-    logger.info(f"Processing {len(urls)} URLs")
+    logger.info(f"Processing {len(url_data)} URLs")
 
     # Process URLs
     async with httpx.AsyncClient() as client:
-        tasks = [scrape_url(url) for url in urls]
+        tasks = [scrape_url(url, title) for url, title in url_data]
         results = await asyncio.gather(*tasks)
 
     # Save results
     successful_results = [r for r in results if r]
-    logger.info(f"Successfully processed {len(successful_results)} out of {len(urls)} URLs")
+    logger.info(f"Successfully processed {len(successful_results)} out of {len(url_data)} URLs")
     
-    output_file = "llm_processed_articles.json"
+    output_file = f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}-llm_processed_articles.json"
     with open(output_file, "w") as f:
         json.dump(successful_results, f, indent=2)
     logger.info(f"Results saved to {output_file}")
