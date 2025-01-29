@@ -13,6 +13,11 @@
             "enabled": true,
             "url": "https://raw.githubusercontent.com/chainfeeds/RSSAggregatorforWeb3/main/RAW.opml",
             "filename": "chainfeeds-RSSAggregatorforWeb3.opml"
+        },
+        "telegram-channels": {
+            "enabled": true,
+            "url": "https://raw.githubusercontent.com/chainfeeds/RSSAggregatorforWeb3/main/telegram-channels.opml",
+            "filename": "telegram-channels.opml"
         }
     },
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+<head>
+<title>Feed Subscriptions</title>
+</head>
+<body>
+  <outline title="Telegram频道" text="Telegram频道">
+      <outline text="Layer GG - Telegram Channel" title="Layer GG - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/layergg" htmlUrl="https://t.me/s/layergg"/>
+      <outline text="Kirby Crypto - Telegram Channel" title="Kirby Crypto - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/kirbycrypto" htmlUrl="https://t.me/s/kirbycrypto"/>
+      <outline text="C4 - Telegram Channel" title="C4 - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/c4dotgg" htmlUrl="https://t.me/s/c4dotgg"/>
+      <outline text="Ian's Intel - Telegram Channel" title="Ian's Intel - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/iansintel" htmlUrl="https://t.me/s/iansintel"/>
+      <outline text="New Listings Feed - Telegram Channel" title="New Listings Feed - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/NewListingsFeed" htmlUrl="https://t.me/s/NewListingsFeed"/>
+      <outline text="Tree News Feed - Telegram Channel" title="Tree News Feed - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/TreeNewsFeed" htmlUrl="https://t.me/s/TreeNewsFeed"/>
+      <outline text="Threading on the Edge - Telegram Channel" title="Threading on the Edge - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/threadingontheedge" htmlUrl="https://t.me/s/threadingontheedge"/>
+      <outline text="Cookies Reads - Telegram Channel" title="Cookies Reads - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/cookiesreads" htmlUrl="https://t.me/s/cookiesreads"/>
+      <outline text="Ayyyeandy - Telegram Channel" title="Ayyyeandy - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/ayyyeandy" htmlUrl="https://t.me/s/ayyyeandy"/>
+      <outline text="Chung Daily Note - Telegram Channel" title="Chung Daily Note - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/chungdailynote" htmlUrl="https://t.me/s/chungdailynote"/>
+      <outline text="Bujidao Daily - Telegram Channel" title="Bujidao Daily - Telegram Channel" type="rss" 
+            xmlUrl="https://rsshub.app/telegram/channel/bujidaodaily" htmlUrl="https://t.me/s/bujidaodaily"/>
+  </outline>
+</body>
+</opml>
