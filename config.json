@@ -16,7 +16,7 @@
         },
         "telegram-channels": {
             "enabled": true,
-            "url": "https://raw.githubusercontent.com/chainfeeds/RSSAggregatorforWeb3/main/telegram-channels.opml",
+            "url": "https://raw.githubusercontent.com/metaanomaly/yarb-web3/7c1c7c2ada33d2f861eb4eff6e2eb70086d869ee/rss/telegram-channels.opml",
             "filename": "telegram-channels.opml"
         }
     },
